@@ -3,11 +3,11 @@ package com.nativeteams.common.data.datasource
 import com.nativeteams.common.domain.model.Stock
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import javax.inject.Inject
 
-class StocksLocalDataSource(
+class StocksLocalDataSource @Inject constructor() {
+
     private var cachedStocks: List<Stock> = emptyList()
-) {
-
     private val mutex = Mutex()
 
     suspend fun cache(list: List<Stock>) {

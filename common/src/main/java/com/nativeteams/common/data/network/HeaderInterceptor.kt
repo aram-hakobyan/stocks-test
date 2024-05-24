@@ -1,6 +1,5 @@
 package com.nativeteams.common.data.network
 
-import com.nativeteams.common.data.repository.TokenRepositoryImpl
 import com.nativeteams.common.domain.repository.TokenRepository
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -18,7 +17,7 @@ class HeaderInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
 
-        val token = tokenRepository.loadToken()
+        val token = tokenRepository.fetchToken()
 
         builder.addHeader(HEADER_TOKEN, token)
         builder.addHeader(HEADER_HOST, host)

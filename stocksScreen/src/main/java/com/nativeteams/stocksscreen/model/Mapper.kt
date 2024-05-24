@@ -1,6 +1,6 @@
 package com.nativeteams.stocksscreen.model
 
-import com.nativeteams.common.domain.ext.formatted
+import com.nativeteams.common.domain.ext.decimalFormat
 import com.nativeteams.common.domain.ext.growthPercentage
 import com.nativeteams.common.domain.model.Stock
 
@@ -25,9 +25,9 @@ fun Stock.asPresentation(): StockModel {
                 return StockModel(
                     symbol,
                     fullExchangeName,
-                    lastClose.formatted(),
-                    diff.formatted(),
-                    "${diffPercentage.formatted()}%",
+                    lastClose.decimalFormat(),
+                    diff.decimalFormat(),
+                    "${diffPercentage.decimalFormat()}%",
                     diffSign
                 )
             }

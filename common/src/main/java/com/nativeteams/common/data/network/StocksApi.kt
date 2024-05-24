@@ -1,6 +1,6 @@
 package com.nativeteams.common.data.network
 
-import com.nativeteams.common.domain.model.MarketData
+import com.nativeteams.common.domain.model.MarketSummary
 import retrofit2.http.GET
 import retrofit2.http.Query
 import javax.inject.Singleton
@@ -11,7 +11,7 @@ interface StocksApi {
     @GET(URL_GET_SUMMARY)
     suspend fun getSummary(
         @Query("region") region: String = "US"
-    ): MarketData
+    ): MarketSummary
 
     companion object {
         private const val URL_GET_SUMMARY = "market/v2/get-summary/"

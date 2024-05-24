@@ -1,10 +1,10 @@
 package com.nativeteams.common.domain.model
 
-data class MarketData(
-    val marketSummaryAndSparkResponse: MarketSummary
+data class MarketSummary(
+    val marketSummaryAndSparkResponse: MarketResponse
 )
 
-data class MarketSummary(
+data class MarketResponse(
     val result: List<Stock>,
     val error: Any?
 )
@@ -32,7 +32,7 @@ data class Stock(
     val exchange: String,
     val region: String,
     val shortName: String,
-    val regularMarketPreviousClose: RegularMarketPreviousClose,
+    val regularMarketPreviousClose: MarketPreviousClose,
     val triggerable: Boolean
 )
 
@@ -52,7 +52,7 @@ data class Spark(
     val close: List<Double>
 )
 
-data class RegularMarketPreviousClose(
+data class MarketPreviousClose(
     val raw: Double,
     val fmt: String
 )

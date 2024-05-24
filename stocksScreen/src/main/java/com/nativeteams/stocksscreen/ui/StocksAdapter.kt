@@ -1,6 +1,6 @@
 package com.nativeteams.stocksscreen.ui
 
-import android.graphics.Color
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nativeteams.stocksscreen.R
 import com.nativeteams.stocksscreen.databinding.StockItemBinding
 import com.nativeteams.stocksscreen.model.StockModel
+import javax.inject.Inject
 
-class StocksAdapter : ListAdapter<StockModel, RecyclerView.ViewHolder>(
+class StocksAdapter @Inject constructor() : ListAdapter<StockModel, RecyclerView.ViewHolder>(
     StockDiffCallback()
 ) {
 
@@ -20,16 +21,16 @@ class StocksAdapter : ListAdapter<StockModel, RecyclerView.ViewHolder>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        StockItemViewHolder(
-            StockItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+        parent.context.run {
+            val binding = StockItemBinding.inflate(
+                LayoutInflater.from(this), parent, false
             )
-        )
+            StockItemViewHolder(this, binding)
+        }
+
 
     class StockItemViewHolder(
-        binding: StockItemBinding
+        private val context: Context, binding: StockItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val symbolTextView: TextView = itemView.findViewById(R.id.stockName)
@@ -44,22 +45,29 @@ class StocksAdapter : ListAdapter<StockModel, RecyclerView.ViewHolder>(
             fullNameTextView.text = stock.fullExchangeName
 
             valueTextView.text = stock.value
-            diffTextView.text = diffTextView.context.getString(
+            diffTextView.text = context.getString(
                 R.string.diffFormat, stock.diffSign, stock.diff
             )
 
             val diffPercentageText = "${stock.diffSign}${stock.diffPercentage}"
-            diffPercentageTextView.text = diffPercentageTextView.context.getString(
+            diffPercentageTextView.text = context.getString(
                 R.string.diffPercentageFormat, diffPercentageText
             )
 
-            val color = when (diffPercentageText.first()) {
-                '+' -> Color.GREEN
-                '-' -> Color.RED
-                else -> Color.GRAY
-            }
+            val color = getColorBySign(
+                diffPercentageText.first()
+            )
             diffTextView.setTextColor(color)
             diffPercentageTextView.setTextColor(color)
+        }
+
+        private fun getColorBySign(sign: Char): Int {
+            val colorId = when (sign) {
+                '+' -> com.nativeteams.common.R.color.green
+                '-' -> com.nativeteams.common.R.color.red
+                else -> com.nativeteams.common.R.color.gray
+            }
+            return context.getColor(colorId)
         }
     }
 

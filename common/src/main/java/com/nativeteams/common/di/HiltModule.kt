@@ -2,10 +2,10 @@ package com.nativeteams.common.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.nativeteams.common.data.network.HeaderInterceptor
-import com.nativeteams.common.data.network.StocksApi
 import com.nativeteams.common.data.datasource.StocksLocalDataSource
 import com.nativeteams.common.data.datasource.StocksRemoteDataSource
+import com.nativeteams.common.data.network.HeaderInterceptor
+import com.nativeteams.common.data.network.StocksApi
 import com.nativeteams.common.data.repository.StocksRepositoryImpl
 import com.nativeteams.common.data.repository.TokenRepositoryImpl
 import com.nativeteams.common.domain.repository.StocksRepository

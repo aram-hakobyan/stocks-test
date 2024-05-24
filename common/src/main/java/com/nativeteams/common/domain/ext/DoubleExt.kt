@@ -6,11 +6,11 @@ import java.util.Locale
 
 const val DEFAULT_PATTERN = "#,##0.00"
 
-fun Double.formatted(): String {
+fun Double.decimalFormat(): String {
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
         (this@apply as DecimalFormat).applyPattern(DEFAULT_PATTERN)
     }
-    return formatter.format(this@formatted)
+    return formatter.format(this@decimalFormat)
 }
 
 fun Pair<Double, Double>.growthPercentage(): Double {

@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.nativeteams.stocksscreen.databinding.FragmentStocksBinding
 import com.nativeteams.stocksscreen.viewmodel.StocksViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class StocksFragment : Fragment() {
@@ -19,7 +20,9 @@ class StocksFragment : Fragment() {
     private lateinit var binding: FragmentStocksBinding
 
     private val viewModel: StocksViewModel by viewModels()
-    private val stocksAdapter = StocksAdapter()
+
+    @Inject
+    lateinit var stocksAdapter: StocksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
