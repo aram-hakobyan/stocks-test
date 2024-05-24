@@ -1,3 +1,4 @@
+//file:noinspection DependencyNotationArgument
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -44,6 +45,7 @@ dependencies {
     implementation common.values()
     implementation app.values()
     implementation project(':common')
+    implementation project(':stocksScreen')
 }
 kapt {
     correctErrorTypes true

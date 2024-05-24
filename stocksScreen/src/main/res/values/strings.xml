@@ -2,4 +2,10 @@
 <resources>
 
     <string name="stocks">Stocks</string>
+
+    <string name="general_error">"Something went wrong. Please try again later."</string>
+    <string name="network_error">"Failed to load data. Please try again later."</string>
+
+    <string name="diffFormat">%1$s%2$s</string>
+    <string name="diffPercentageFormat">(%1$s)</string>
 </resources>
