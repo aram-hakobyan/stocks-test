@@ -32,7 +32,7 @@ class StocksViewModel @Inject constructor(
 
         when (val result = getStocksUseCase(refresh)) {
             is Result.Success -> {
-                onSuccess(result.data)
+                onStocksLoaded(result.data)
             }
 
             is Result.Failure -> {
@@ -41,28 +41,32 @@ class StocksViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccess(stocks: List<Stock>) {
-        _uiState.update {
-            val stockModels = runCatching {
-                stocks.asPresentation()
-            }.getOrNull()
+    private fun onStocksLoaded(
+        stocks: List<Stock>
+    ) {
+        val stockModels = runCatching {
+            stocks.asPresentation()
+        }.getOrNull()
 
-            if (stockModels == null) {
-                onError(R.string.general_error)
-                return
+        if (stockModels == null) {
+            onError(R.string.general_error)
+        } else {
+            _uiState.update {
+                StocksUiState.Success(stockModels)
             }
-            StocksUiState.Success(stockModels)
         }
     }
 
-    private fun onError(@StringRes messageId: Int) {
+    private fun onError(
+        @StringRes messageId: Int
+    ) {
         _uiState.update {
             StocksUiState.Error(messageId)
         }
     }
 
     sealed interface StocksUiState {
-        object Loading : StocksUiState
+        data object Loading : StocksUiState
         data class Success(val data: List<StockModel>) : StocksUiState
         data class Error(@StringRes val messageId: Int) : StocksUiState
     }

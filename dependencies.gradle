@@ -3,7 +3,7 @@ ext {
     targetSdkVer = 33
     minSdkVer = 26
     hiltVersion = "2.42"
-    kotlinVersion = "1.7.20"
+    kotlinVersion = "1.9.20"
     retrofitVersion = "2.9.0"
     coroutinesVersion = "1.6.4"
     androidxKtxVersion = "1.8.0"

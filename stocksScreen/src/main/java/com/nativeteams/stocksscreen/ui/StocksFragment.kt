@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.nativeteams.stocksscreen.databinding.FragmentStocksBinding
 import com.nativeteams.stocksscreen.viewmodel.StocksViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StocksFragment : Fragment() {
@@ -21,8 +24,7 @@ class StocksFragment : Fragment() {
 
     private val viewModel: StocksViewModel by viewModels()
 
-    @Inject
-    lateinit var stocksAdapter: StocksAdapter
+    private val stocksAdapter by lazy { StocksAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -33,28 +35,29 @@ class StocksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.setup()
         observeData(view)
         viewModel.loadStocks()
     }
 
     private fun observeData(view: View) {
-        lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect {
-                when (it) {
-                    is StocksViewModel.StocksUiState.Error -> {
-                        binding.hideProgress()
-                        Snackbar.make(view, it.messageId, Snackbar.LENGTH_LONG).show()
-                    }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest { uiState ->
+                    when (uiState) {
+                        is StocksViewModel.StocksUiState.Error -> {
+                            binding.hideProgress()
+                            Snackbar.make(view, uiState.messageId, Snackbar.LENGTH_LONG).show()
+                        }
 
-                    StocksViewModel.StocksUiState.Loading -> {
-                        binding.showProgress()
-                    }
+                        StocksViewModel.StocksUiState.Loading -> {
+                            binding.showProgress()
+                        }
 
-                    is StocksViewModel.StocksUiState.Success -> {
-                        binding.hideProgress()
-                        stocksAdapter.submitList(it.data)
+                        is StocksViewModel.StocksUiState.Success -> {
+                            binding.hideProgress()
+                            stocksAdapter.submitList(uiState.data)
+                        }
                     }
                 }
             }
