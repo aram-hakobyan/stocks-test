@@ -1,12 +1,12 @@
 ext {
-    compileSdkVer = 33
-    targetSdkVer = 33
+    compileSdkVer = 34
+    targetSdkVer = 34
     minSdkVer = 26
-    hiltVersion = "2.42"
+    hiltVersion = "2.48"
     kotlinVersion = "1.9.20"
-    retrofitVersion = "2.9.0"
-    coroutinesVersion = "1.6.4"
-    androidxKtxVersion = "1.8.0"
+    retrofitVersion = "2.11.0"
+    coroutinesVersion = "1.9.0-RC"
+    androidxKtxVersion = "1.13.1"
     viewModelVersion = "2.5.1"
     lifecycleExtensionsVersion = "2.2.0"
     lifecycleRuntimeVersion = "2.1.0"
@@ -17,10 +17,11 @@ ext {
     androidXFragmentVersion = "1.5.4"
     constraintLayoutVersion = "2.1.4"
     multidexVersion = "2.0.1"
-    appCompatVersion = "1.6.0"
+    appCompatVersion = "1.7.0"
     constraintLayoutVersion = "2.1.4"
     recyclerViewVersion = "1.2.1"
     swipeRefreshLayoutVersion = "1.1.0"
+    chuckerVersion = "4.0.0"
 
     app = [
             multidex: "androidx.multidex:multidex:$multidexVersion",
@@ -62,6 +63,14 @@ ext {
     compilers = [
             hiltCompiler        : "com.google.dagger:hilt-compiler:$hiltVersion",
             androidxHiltCompiler: "androidx.hilt:hilt-compiler:1.0.0"
+    ]
+
+    chucker = [
+            chucker: "com.github.chuckerteam.chucker:library:$chuckerVersion",
+    ]
+
+    chuckerNoOp = [
+            chuckerNoOp: "com.github.chuckerteam.chucker:library-no-op:$chuckerVersion",
     ]
 
     stocksScreen = [

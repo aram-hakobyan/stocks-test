@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'com.nativeteams.common'
+    namespace 'com.androidart.common'
     compileSdk compileSdkVer
 
     defaultConfig {
@@ -20,6 +20,11 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -36,5 +41,7 @@ android {
 dependencies {
     kapt compilers.values()
     implementation common.values()
+    debugImplementation chucker.values()
+    releaseImplementation chuckerNoOp.values()
     api retrofit.values()
 }

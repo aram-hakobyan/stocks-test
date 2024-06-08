@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stocks_fragment"
-        android:name="com.nativeteams.stocksscreen.ui.StocksFragment"
+        android:name="com.androidart.stocksscreen.ui.StocksFragment"
         android:label="Stocks List"
         tools:layout="@layout/fragment_stocks" />
 
